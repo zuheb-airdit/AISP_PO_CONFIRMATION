@@ -1,0 +1,155 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "com.aispasn.aispasnairdit",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.17.3",
+      "toolsId": "eb0e8c52-5953-4548-8bd5-f14ad2ab4763"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v2/zp-mm-asnpohead-bndsample/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "annotation0"
+          ],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      },
+      "annotation0": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation0.xml",
+        "settings": {
+          "localUri": "annotations/annotation0.xml"
+        }
+      },
+      "zp-aisp-asnupdate-head-bndsample": {
+        "uri": "odata/v2/zp-aisp-asnupdate-head-bndsample/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/zp-aisp-asnupdate-head-bndsample/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.135.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.aispasn.aispasnairdit.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {}
+      },
+      "zp-aisp-asnupdate-head-bndsample": {
+        "dataSource": "zp-aisp-asnupdate-head-bndsample",
+        "preload": true,
+        "settings": {}
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "beginColumnPages",
+        "controlId": "layout",
+        "type": "View",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "com.aispasn.aispasnairdit.view"
+      },
+      "routes": [
+        {
+          "name": "RouteASNLists",
+          "pattern": ":?query:",
+          "target": [
+            "TargetASNLists"
+          ]
+        },
+        {
+          "name": "RouteAsnDetails",
+          "pattern": "RouteAsnDetails/{poId}/{source}",
+          "target": [
+            "TargetASNLists",
+            "TargetAsnDetails"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetASNLists": {
+          "viewId": "ASNLists",
+          "viewName": "ASNLists"
+        },
+        "TargetAsnDetails": {
+          "viewId": "AsnObjectPage",
+          "viewName": "AsnObjectPage",
+          "viewLevel": 2,
+          "controlId": "layout",
+          "controlAggregation": "midColumnPages",
+          "clearControlAggregation": true
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "com.aispasn.aispasnairdit.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "aisp_po_airdit1"
+  }
+}

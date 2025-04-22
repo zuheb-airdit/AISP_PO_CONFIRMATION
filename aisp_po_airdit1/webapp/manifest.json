@@ -1,0 +1,153 @@
+{
+    "_version": "1.65.0",
+    "sap.app": {
+        "id": "com.aisppo.aisppoairdit1",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.17.3",
+            "toolsId": "02e9028e-7402-45d6-be13-b6da2b0d8931"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "/odata/v2/zp-mm-pohead-bndsample/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "annotation0"
+                    ],
+                    "localUri": "localService/mainService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            },
+            "annotation0": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation0.xml",
+                "settings": {
+                    "localUri": "annotations/annotation0.xml"
+                }
+            }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "POConfirmation-Confirm": {
+                    "semanticObject": "POConfirmation",
+                    "action": "Confirm",
+                    "title": "{{POConfirmation-Confirm.flpTitle}}",
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    }
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "dependencies": {
+            "minUI5Version": "1.135.0",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.aisppo.aisppoairdit1.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {}
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "controlAggregation": "beginColumnPages",
+                "controlId": "layout",
+                "type": "View",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "com.aisppo.aisppoairdit1.view"
+            },
+            "routes": [
+                {
+                    "name": "RoutePOLists",
+                    "pattern": ":?query:",
+                    "target": [
+                        "TargetPOLists"
+                    ]
+                },
+                {
+                    "name": "RouteDetail",
+                    "pattern": "RouteDetail/{poId}",
+                    "target": [
+                        "TargetPOConfirmation",
+                        "TargetDetail"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetPOLists": {
+                    "viewId": "POLists",
+                    "viewName": "POLists"
+                },
+                "TargetDetail": {
+                    "controlAggregation": "midColumnPages",
+                    "viewId": "PoDetails",
+                    "viewName": "PoDetails",
+                    "viewLevel": 2,
+                    "clearControlAggregation": true
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "com.aisppo.aisppoairdit1.view.App",
+            "type": "XML",
+            "id": "App",
+            "async": true
+        }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "aisp_po_airdit1"
+    }
+}

@@ -1,0 +1,241 @@
+<mvc:View
+    controllerName="com.aispasn.aispasnairdit.controller.ASNLists"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:f="sap.f"
+    xmlns:vm="sap.ui.fl.variants"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+>
+    <Page
+        showFooter="false"
+        showHeader="false"
+    >
+        <smartFilterBar:SmartFilterBar
+            id="smartFilterBar"
+            entitySet="ZP_MM_ASNPOHEAD"
+            persistencyKey="SmartFilter_Explored"
+        >
+            <smartFilterBar:controlConfiguration>
+                <smartFilterBar:ControlConfiguration
+                    key="Bedat"
+                    visibleInAdvancedArea="true"
+                    conditionType="{
+								module: 'sap.ui.comp.config.condition.DateRangeType'
+							}"
+                />
+            </smartFilterBar:controlConfiguration>
+        </smartFilterBar:SmartFilterBar>
+
+        <IconTabBar
+            id="idIconTabBarMulti"
+            expanded="{device>/isNoPhone}"
+            class="customTabBar"
+            select="onIconTabBarSelect"
+
+        >
+            <items>
+                <IconTabFilter
+                    key="open"
+                    icon="./Images/open.png"
+                    text="OPEN"
+                >
+                    <smartTable:SmartTable
+                        entitySet="ZP_MM_ASNPOHEAD"
+                        smartFilterId="smartFilterBar"
+                        enableExport="true"
+                        beforeExport="onBeforeExport"
+                        useVariantManagement="true"
+                        useTablePersonalisation="true"
+                        header="Pending Orders"
+                        showRowCount="true"
+                        persistencyKey="SmartTableRefApp_Explored"
+                        enableAutoBinding="true"
+                        tableType="ResponsiveTable"
+                        demandPopin="true"
+                        enableAutoColumnWidth="true"
+                        id="smartTable"
+                    >
+                        <Table
+                            selectionChange="selectionChangeHandlerRregister"
+                            growing="true"
+                            growingThreshold="10"
+                            id="idTableAsn"
+                        >
+                            <columns>
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "Ebeln","leadingProperty": "Ebeln", "sortProperty": "Ebeln", "filterProperty": "Ebeln", "columnIndex": "0" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="PO Number"
+                                        wrapping="true"
+                                    />
+                                </Column>
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "Status","leadingProperty": "Status", "sortProperty": "Status", "filterProperty": "Status", "columnIndex": "5" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="Status"
+                                        wrapping="true"
+                                    />
+                                </Column>
+
+                                <Column>
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "Amount","leadingProperty": "Amount", "sortProperty": "Amount", "filterProperty": "Amount", "columnIndex": "2" }'
+                                        />
+                                    </customData>
+                                    <Label
+                                        text="Amount"
+                                        wrapping="true"
+                                    />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem
+                                    vAlign="Middle"
+                                    type="Navigation"
+                                    press="onClickofPONumber"
+                                >
+                                    <cells>
+                                        <Link
+                                            text="{Ebeln}"
+                                            press="onClickofPONumber"
+                                        />
+                                        <ObjectStatus
+                                            text="{path: 'Status', formatter: '.formatter.statusFormattertest'}"
+                                            state="{path: 'Status', formatter: '.formatter.indicationFormat'}"
+                                            inverted="true"
+                                            class="noWrapText"
+                                        />
+
+                                        <Text
+                                            text="{path: 'Amount', formatter: '.formatter.amountFormatter'}"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </smartTable:SmartTable>
+                </IconTabFilter>
+
+                <IconTabFilter
+                    key="attachments"
+                    icon="./Images/submitted.png"
+                    text="SUBMITTED"
+                >
+                    <Table
+                        items="{
+                           path:'asnModel>/ZP_AISP_ASNUPDATE_HEAD',
+                           sorter: {
+                           path: 'Ebeln',
+                           descending: false
+                              }
+                          }"
+                        itemPress="onClickofPONumber"
+                        mode="SingleSelectMaster"
+                        inset="false"
+                        id="myTablde"
+                        class="sapFDynamicPageAlignContent"
+                    >
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <Title
+                                    id="title"
+                                    text="Orders"
+                                />
+                                <ToolbarSeparator />
+                                <vm:VariantManagement
+                                    id="p13nVm"
+                                    for="persoTable"
+                                />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://action-settings"
+                                    press="openPersoDialog"
+                                    tooltip="Settings"
+                                />
+                            </OverflowToolbar>
+                        </headerToolbar>
+
+                        <columns>
+                            <Column mergeDuplicates="true">
+                                <header>
+                                    <Text text="PO Number" />
+                                </header>
+                            </Column>
+                            <Column mergeDuplicates="true">
+                                <header>
+                                    <Text text="ASN No" />
+                                </header>
+                            </Column>
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                hAlign="End"
+                            >
+                                <header>
+                                    <Text text="Creation Date" />
+                                </header>
+                            </Column>
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                hAlign="Center"
+                            >
+                                <header>
+                                    <Text text="Amount" />
+                                </header>
+                            </Column>
+                            <Column hAlign="End">
+                                <header>
+                                    <Text text="Buyer" />
+                                </header>
+                            </Column>
+                            <Column hAlign="End">
+                                <header>
+                                    <Text text="Status" />
+                                </header>
+                            </Column>
+                        </columns>
+
+                        <items>
+                            <ColumnListItem
+                                vAlign="Middle"
+                                type="Navigation"
+                            >
+                                <cells>
+                                    <Link
+                                        text="{asnModel>Ebeln}"
+                                        press="onClickofPONumber"
+                                    />
+                                    <Text text="{asnModel>vbeln}" />
+                                    <Text text="{asnModel>Bedat}" />
+                                    <Text text="{asnModel>Ekorg}" />
+                                    <Text text="{asnModel>Ernam}" />
+                                    <ObjectStatus
+                                        text="{asnModel>Status}"
+                                        state="{path: 'asnModel>Status', formatter: '.formatter.indicationFormat'}"
+                                        inverted="true"
+                                        class="noWrapText"
+                                    />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </IconTabFilter>
+            </items>
+        </IconTabBar>
+    </Page>
+</mvc:View>
