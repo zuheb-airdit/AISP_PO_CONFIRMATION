@@ -15,6 +15,19 @@
       "version": "1.17.3",
       "toolsId": "eb0e8c52-5953-4548-8bd5-f14ad2ab4763"
     },
+    "crossNavigation": {
+      "inbounds": {
+        "SupplierForm-Creation": {
+          "semanticObject": "Shipping",
+          "action": "Creation",
+          "title": "ASN Creation",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    },
     "dataSources": {
       "mainService": {
         "uri": "/odata/v2/zp-mm-asnpohead-bndsample/",
